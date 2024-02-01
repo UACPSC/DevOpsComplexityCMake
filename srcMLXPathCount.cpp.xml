@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C++" filename="srcMLXPathCount.cpp"><comment type="block">/*
+    srcMLXPathCount.cpp
+
+    Implementation file for srcMLXPathCount()
+*/</comment>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"srcMLXPathCount.hpp"</cpp:file></cpp:include>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"memory"</cpp:file></cpp:include>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;libxml/xpath.h&gt;</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;libxml/xpathInternals.h&gt;</cpp:file></cpp:include>
+
+<comment type="block" format="doxygen">/** Count of the result of applying the xpath to the srcML file
+ * 
+ * XPath expression must result in a numeric, integer result.
+ * In general, this means it needs to use the XPath count() function
+ *
+ * @param srcMLfile filename of srcML file
+ * @param xpath XPath expression as string
+ * @retval  0 on success
+ * @retval -1 Error in apply XPath
+ * @retval -2 Invalid argument
+ */</comment>
+<function><type><name>int</name></type> <name>srcMLXPathCount</name><parameter_list>(<parameter><decl><type><specifier>const</specifier> <name>char</name><modifier>*</modifier></type> <name>srcMLfile</name></decl></parameter>, <parameter><decl><type><specifier>const</specifier> <name>char</name><modifier>*</modifier></type> <name>xpath</name></decl></parameter>)</parameter_list> <block>{
+
+    <comment type="line">// precondition on parameters</comment>
+    <if_stmt><if>if <condition>(<expr><name>srcMLfile</name> <operator>==</operator> <literal type="null">nullptr</literal> <operator>||</operator> <name>xpath</name> <operator>==</operator> <literal type="null">nullptr</literal></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">2</literal></expr>;</return></block></if></if_stmt>
+
+    <expr_stmt><expr><call><name>xmlInitParser</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+
+    <comment type="line">// open the srcML file with no encoding change and no options</comment>
+    <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name><name>unique_ptr</name><argument_list type="generic">&lt;<argument><expr><name>xmlDoc</name></expr></argument>, <argument><expr><decltype>decltype<argument_list>(<argument><expr><operator>&amp;</operator><name>xmlFreeDoc</name></expr></argument>)</argument_list></decltype></expr></argument>&gt;</argument_list></name></name></type> <name>srcMLdoc</name><argument_list>(<argument><expr><call><name>xmlReadFile</name><argument_list>(<argument><expr><name>srcMLfile</name></expr></argument>, <argument><expr><literal type="null">nullptr</literal></expr></argument>, <argument><expr><literal type="number">0</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><name>xmlFreeDoc</name></expr></argument>)</argument_list></decl>;</decl_stmt>
+    <if_stmt><if>if <condition>(<expr><operator>!</operator><name>srcMLdoc</name></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+
+    <comment type="line">// create xpath evaluation context</comment>
+    <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name><name>unique_ptr</name><argument_list type="generic">&lt;<argument><expr><name>xmlXPathContext</name></expr></argument>, <argument><expr><decltype>decltype<argument_list>(<argument><expr><operator>&amp;</operator><name>xmlXPathFreeContext</name></expr></argument>)</argument_list></decltype></expr></argument>&gt;</argument_list></name></name></type> <name>xpathCtx</name><argument_list>(<argument><expr><call><name>xmlXPathNewContext</name><argument_list>(<argument><expr><call><name><name>srcMLdoc</name><operator>.</operator><name>get</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><name>xmlXPathFreeContext</name></expr></argument>)</argument_list></decl>;</decl_stmt>
+    <if_stmt><if>if <condition>(<expr><operator>!</operator><name>xpathCtx</name></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+
+    <comment type="line">// register srcML namespaces</comment>
+    <if_stmt><if>if <condition>(<expr><call><name>xmlXPathRegisterNs</name><argument_list>(<argument><expr><call><name><name>xpathCtx</name><operator>.</operator><name>get</name></name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><name>BAD_CAST</name> <literal type="string">"src"</literal></expr></argument>, <argument><expr><name>BAD_CAST</name> <literal type="string">"http://www.srcML.org/srcML/src"</literal></expr></argument>)</argument_list></call></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+    <if_stmt><if>if <condition>(<expr><call><name>xmlXPathRegisterNs</name><argument_list>(<argument><expr><call><name><name>xpathCtx</name><operator>.</operator><name>get</name></name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><name>BAD_CAST</name> <literal type="string">"cpp"</literal></expr></argument>, <argument><expr><name>BAD_CAST</name> <literal type="string">"http://www.srcML.org/srcML/cpp"</literal></expr></argument>)</argument_list></call></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+
+    <comment type="line">// evaluate xpath expression</comment>
+    <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name><name>unique_ptr</name><argument_list type="generic">&lt;<argument><expr><name>xmlXPathObject</name></expr></argument>, <argument><expr><decltype>decltype<argument_list>(<argument><expr><operator>&amp;</operator><name>xmlXPathFreeObject</name></expr></argument>)</argument_list></decltype></expr></argument>&gt;</argument_list></name></name></type> <name>xpathResults</name><argument_list>(<argument><expr><macro><name>xmlXPathEvalExpression</name><argument_list>(<argument>BAD_CAST xpath</argument>, <argument>xpathCtx.get()</argument>)</argument_list></macro></expr></argument>, <argument><expr><name>xmlXPathFreeObject</name></expr></argument>)</argument_list></decl>;</decl_stmt>
+    <if_stmt><if>if <condition>(<expr><operator>!</operator><name>xpathResults</name></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+
+    <comment type="line">// extract the count</comment>
+    <decl_stmt><decl><type><name>int</name></type> <name>count</name> <init>= <expr><call><name>xmlXPathCastToNumber</name><argument_list>(<argument><expr><call><name><name>xpathResults</name><operator>.</operator><name>get</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+    <if_stmt><if>if <condition>(<expr><name>count</name> <operator>&lt;</operator> <literal type="number">0</literal></expr>)</condition><block type="pseudo">
+        <return>return <expr><operator>-</operator><literal type="number">1</literal></expr>;</return></block></if></if_stmt>
+
+    <return>return <expr><name>count</name></expr>;</return>
+}</block></function>
+</unit>
