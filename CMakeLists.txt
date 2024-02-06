@@ -12,3 +12,12 @@ target_compile_features(srccomplexity PRIVATE cxx_std_17)
 # libxml2
 find_package(LibXml2 REQUIRED)
 target_link_libraries(srccomplexity PRIVATE LibXml2::LibXml2)
+
+# run
+add_custom_target(run
+    COMMENT "Complexity"
+    COMMAND $<TARGET_FILE:srccomplexity> < ${CMAKE_CURRENT_SOURCE_DIR}/srcMLXPathCount.cpp.xml
+    DEPENDS srccomplexity
+    USES_TERMINAL
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
