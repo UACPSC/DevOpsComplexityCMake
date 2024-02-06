@@ -21,3 +21,6 @@ add_custom_target(run
     USES_TERMINAL
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
+
+# install
+install(PROGRAMS $<TARGET_FILE:srccomplexity> TYPE BIN)
