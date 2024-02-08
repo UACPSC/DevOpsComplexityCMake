@@ -9,9 +9,15 @@ add_executable(srccomplexity)
 target_sources(srccomplexity PRIVATE srcComplexity.cpp srcMLXPathCount.cpp)
 target_compile_features(srccomplexity PRIVATE cxx_std_17)
 
+# srcMLXPathCountTest
+add_executable(srcMLXPathCountTest)
+target_sources(srcMLXPathCountTest PRIVATE srcMLXPathCountTest.cpp srcMLXPathCount.cpp)
+target_compile_features(srcMLXPathCountTest PRIVATE cxx_std_17)
+
 # libxml2
 find_package(LibXml2 REQUIRED)
 target_link_libraries(srccomplexity PRIVATE LibXml2::LibXml2)
+target_link_libraries(srcMLXPathCountTest PRIVATE LibXml2::LibXml2)
 
 # run
 add_custom_target(run
