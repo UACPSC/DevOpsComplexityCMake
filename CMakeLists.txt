@@ -19,6 +19,10 @@ find_package(LibXml2 REQUIRED)
 target_link_libraries(srccomplexity PRIVATE LibXml2::LibXml2)
 target_link_libraries(srcMLXPathCountTest PRIVATE LibXml2::LibXml2)
 
+# srcMLXPathCount library
+add_library(srcMLXPathCount OBJECT srcMLXPathCount.cpp)
+target_link_libraries(srcMLXPathCount PRIVATE LibXml2::LibXml2)
+
 # run
 add_custom_target(run
     COMMENT "Complexity"
