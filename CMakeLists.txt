@@ -8,11 +8,10 @@ project(Complexity)
 add_executable(srccomplexity)
 target_sources(srccomplexity PRIVATE srcComplexity.cpp)
 target_compile_features(srccomplexity PRIVATE cxx_std_17)
-if(MSVC)
-    target_compile_options(srccomplexity PRIVATE /Wall)
-else()
-    target_compile_options(srccomplexity PRIVATE -Wall)
-endif()
+target_compile_options(srccomplexity PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/Wall>
+    $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>
+)
 
 # srcMLXPathCountTest
 add_executable(srcMLXPathCountTest)
