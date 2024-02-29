@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "complexity",
+  "version": "1.0.1",
+  "dependencies": [
+    { "name": "libxml2", "version>=": "2.10.3" }
+  ],
+  "builtin-baseline": "7476f0d4e77d3333fbb249657df8251c28c4faae"
+}
