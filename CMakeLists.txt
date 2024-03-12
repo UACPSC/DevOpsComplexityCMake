@@ -41,3 +41,16 @@ add_custom_target(run
 
 # install
 install(PROGRAMS $<TARGET_FILE:srccomplexity> TYPE BIN)
+
+# testing
+include(CTest)
+
+add_test(NAME testComplexity1
+         COMMAND ${CMAKE_SOURCE_DIR}/testsuite/testComplexity1.sh
+         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_test(NAME testComplexity2
+         COMMAND ${CMAKE_SOURCE_DIR}/testsuite/testComplexity2.sh
+         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
