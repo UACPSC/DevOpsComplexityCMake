@@ -16,6 +16,11 @@ jobs:
         shell: bash
         run: mkdir build
 
+      - name: Setup packages
+        shell: bash
+        run :
+          sudo apt-get install libxml2-dev
+
       - name: CMake Setup
         working-directory: build
         shell: bash
