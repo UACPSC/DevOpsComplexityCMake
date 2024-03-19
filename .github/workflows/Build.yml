@@ -15,3 +15,10 @@ jobs:
       - name: Create build directory
         shell: bash
         run: mkdir build
+
+      - name: CMake Setup
+        working-directory: build
+        shell: bash
+        run: |
+          cmake .. -G Ninja
+
