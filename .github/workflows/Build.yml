@@ -50,6 +50,13 @@ jobs:
         run: |
           srccomplexity < ../srcMLXPathCount.cpp.xml
 
+      - name: Install srcml
+        working-directory: build
+        shell: bash
+        run: |
+          curl -L -O http://131.123.42.41/srcml_1.0.0-1_ubuntu22.04_x86_64.deb
+          sudo apt-get install ./srcml*.deb
+
       - name: Test
         working-directory: build
         shell: bash
