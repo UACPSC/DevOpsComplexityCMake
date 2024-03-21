@@ -38,3 +38,9 @@ jobs:
         shell: bash
         run: |
           cmake --build . --config Release --target install/strip
+
+      - name: Run
+        working-directory: build
+        shell: bash
+        run: |
+          srccomplexity < ../srcMLXPathCount.cpp.xml
