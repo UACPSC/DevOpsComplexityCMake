@@ -44,3 +44,9 @@ jobs:
         shell: bash
         run: |
           srccomplexity < ../srcMLXPathCount.cpp.xml
+
+      - name: Test
+        working-directory: build
+        shell: bash
+        run: |
+          ctest --verbose
