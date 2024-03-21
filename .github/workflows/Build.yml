@@ -27,3 +27,8 @@ jobs:
         run: |
           cmake .. -G Ninja
 
+      - name: Build
+        working-directory: build
+        shell: bash
+        run: |
+          ninja
