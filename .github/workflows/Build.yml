@@ -31,4 +31,4 @@ jobs:
         working-directory: build
         shell: bash
         run: |
-          ninja
+          cmake --build . --config Release --target all
