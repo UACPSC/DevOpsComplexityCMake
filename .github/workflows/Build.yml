@@ -37,7 +37,7 @@ jobs:
           cmake --build . --config Release --target all
       - uses: actions/upload-artifact@v4
         with:
-          name: Executable
+          name: Executable-${{matrix.os}}
           path: |
             build/srccomplexity
 
@@ -68,7 +68,7 @@ jobs:
           ctest --verbose | tee TestResults.log
       - uses: actions/upload-artifact@v4
         with:
-          name: Test.log
+          name: Test.${{matrix.os}}.log
           path: |
             build/Testing/Temporary/LastTest.log
             build/TestResults.log
