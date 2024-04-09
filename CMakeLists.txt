@@ -54,3 +54,10 @@ add_test(NAME testComplexity2
          COMMAND ${CMAKE_SOURCE_DIR}/testsuite/testComplexity2.sh
          WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
+
+set(CPACK_PACKAGE_NAME "complexity")
+set(CPACK_PACKAGE_CONTACT "Me")
+set(CPACK_STRIP_FILES ON)
+
+# Leave after all cpack configuration
+include(CPack)
