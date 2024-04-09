@@ -17,12 +17,21 @@ services:
       platforms:
         - "linux/amd64"
         - "linux/arm64"
+      args:
+        TAG: "24.04"
     environment:
       - PLATFORM=ubuntu_24.04
     <<: *CONFIGURATION
 
-  fedora_41:
-    image: srccomplexity/fedora:41
+  fedora_40:
+    image: srccomplexity/fedora:40
+    build:
+      context: docker/fedora/
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
+      args:
+        TAG: "40"
     environment:
-      - PLATFORM=fedora_41
+      - PLATFORM=fedora_40
     <<: *CONFIGURATION
