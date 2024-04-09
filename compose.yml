@@ -8,28 +8,40 @@ x-configuration: &CONFIGURATION
     ctest -j 6 --timeout 10;}
     ${COMPOSE_APPEND- }"
 
+x-platforms: &PLATFORMS
+  platforms:
+    - "linux/amd64"
+    - "linux/arm64"
+
 services:
 
   ubuntu_24.04:
     image: srccomplexity/ubuntu:24.04
     build:
       context: docker/ubuntu/
-      platforms:
-        - "linux/amd64"
-        - "linux/arm64"
+      <<: *PLATFORMS
       args:
         TAG: "24.04"
     environment:
       - PLATFORM=ubuntu_24.04
     <<: *CONFIGURATION
 
+  ubuntu_23.04:
+    image: srccomplexity/ubuntu:23.04
+    build:
+      context: docker/ubuntu/
+      <<: *PLATFORMS
+      args:
+        TAG: "23.04"
+    environment:
+      - PLATFORM=ubuntu_23.04
+    <<: *CONFIGURATION
+
   fedora_40:
     image: srccomplexity/fedora:40
     build:
       context: docker/fedora/
-      platforms:
-        - "linux/amd64"
-        - "linux/arm64"
+      <<: *PLATFORMS
       args:
         TAG: "40"
     environment:
