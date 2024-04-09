@@ -1,0 +1,23 @@
+x-configuration: &CONFIGURATION
+  volumes:
+    - .:/Source:ro
+  working_dir: /Build
+  command: bash -c "${COMPOSE_COMMAND-
+    cmake -G Ninja /Source;
+    ninja install;
+    ctest -j 6 --timeout 10;}
+    ${COMPOSE_APPEND- }"
+
+services:
+
+  ubuntu_24.04:
+    image: srccomplexity/ubuntu:24.04
+    environment:
+      - PLATFORM=ubuntu_24.04
+    <<: *CONFIGURATION
+
+  fedora_41:
+    image: srccomplexity/fedora:41
+    environment:
+      - PLATFORM=fedora_41
+    <<: *CONFIGURATION
