@@ -12,6 +12,11 @@ services:
 
   ubuntu_24.04:
     image: srccomplexity/ubuntu:24.04
+    build:
+      context: docker/ubuntu/
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     environment:
       - PLATFORM=ubuntu_24.04
     <<: *CONFIGURATION
