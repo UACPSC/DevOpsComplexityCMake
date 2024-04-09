@@ -1,4 +1,4 @@
-ARG TAG=22.04
+ARG TAG=24.04
 FROM ubuntu:${TAG}
 
 ENV TZ=US/Michigan
