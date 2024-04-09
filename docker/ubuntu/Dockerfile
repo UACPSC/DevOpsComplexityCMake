@@ -45,3 +45,11 @@ RUN case "${TARGETPLATFORM}" in \
 # Put ccache into the path
 ENV PATH /usr/lib/ccache:$PATH
 RUN export PATH=/usr/lib/ccache/:$PATH
+
+# Add package libxml2-dev (combine layers later)
+RUN apt-get update && \
+    apt-get install -y \
+        libxml2-dev \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*

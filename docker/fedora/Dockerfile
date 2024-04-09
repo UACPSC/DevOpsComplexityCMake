@@ -28,3 +28,8 @@ RUN case "${TARGETPLATFORM}" in \
 # Put ccache into the path
 ENV PATH /usr/lib/ccache:$PATH
 RUN export PATH=/usr/lib/ccache/:$PATH
+
+# Add package libxml2-dev (combine layers later)
+RUN dnf install -y \
+        libxml2-devel \
+        && dnf clean all
