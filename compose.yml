@@ -17,6 +17,7 @@ services:
 
   ubuntu_24.04:
     image: srccomplexity/ubuntu:24.04
+    platform: ${PLATFORM}
     build:
       context: docker/ubuntu/
       <<: *PLATFORMS
@@ -28,6 +29,7 @@ services:
 
   ubuntu_23.04:
     image: srccomplexity/ubuntu:23.04
+    platform: ${PLATFORM}
     build:
       context: docker/ubuntu/
       <<: *PLATFORMS
@@ -39,6 +41,7 @@ services:
 
   fedora_40:
     image: srccomplexity/fedora:40
+    platform: ${PLATFORM}
     build:
       context: docker/fedora/
       <<: *PLATFORMS
