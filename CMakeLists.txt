@@ -29,6 +29,9 @@ target_compile_features(srcMLXPathCount PRIVATE cxx_std_17)
 target_link_libraries(srcMLXPathCount PRIVATE LibXml2::LibXml2)
 target_link_libraries(srccomplexity PRIVATE srcMLXPathCount)
 target_link_libraries(srcMLXPathCountTest PRIVATE srcMLXPathCount)
+set_target_properties(srcMLXPathCount PROPERTIES
+    POSITION_INDEPENDENT_CODE ON
+)
 
 # srcMLXPathCount static library
 add_library(srcMLXPathCount_static STATIC srcMLXPathCount.cpp)
