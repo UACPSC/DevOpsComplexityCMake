@@ -55,6 +55,8 @@ add_custom_target(run
 install(TARGETS srccomplexity)
 install(TARGETS srcMLXPathCount)
 install(TARGETS srcMLXPathCount_static)
+include(GNUInstallDirs)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/srcMLXPathCount.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 # testing
 include(CTest)
