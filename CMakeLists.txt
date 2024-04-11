@@ -33,6 +33,7 @@ set_target_properties(srcMLXPathCount PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 
     VERSION "${PROJECT_VERSION}"
+    SOVERSION "${PROJECT_VERSION_MAJOR}"
 )
 
 # srcMLXPathCount static library
