@@ -31,6 +31,8 @@ target_link_libraries(srccomplexity PRIVATE srcMLXPathCount)
 target_link_libraries(srcMLXPathCountTest PRIVATE srcMLXPathCount)
 set_target_properties(srcMLXPathCount PROPERTIES
     POSITION_INDEPENDENT_CODE ON
+
+    VERSION "${PROJECT_VERSION}"
 )
 
 # srcMLXPathCount static library
