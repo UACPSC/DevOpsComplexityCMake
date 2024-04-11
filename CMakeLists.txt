@@ -40,7 +40,8 @@ add_custom_target(run
 )
 
 # install
-install(PROGRAMS $<TARGET_FILE:srccomplexity> TYPE BIN)
+install(TARGETS srccomplexity)
+install(TARGETS srcMLXPathCount)
 
 # testing
 include(CTest)
