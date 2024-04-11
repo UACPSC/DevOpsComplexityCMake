@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 
-project(Complexity)
+project(Complexity VERSION 1.0.0)
 
 # srccomplexity
 add_executable(srccomplexity)
@@ -48,6 +48,7 @@ add_custom_target(run
 # install
 install(TARGETS srccomplexity)
 install(TARGETS srcMLXPathCount)
+install(TARGETS srcMLXPathCount_static)
 
 # testing
 include(CTest)
