@@ -9,6 +9,7 @@ RUN dnf install -y \
         git \
         make \
         ninja-build \
+        libxml2-devel \
         curl \
         tree \
         valgrind \
@@ -28,8 +29,3 @@ RUN case "${TARGETPLATFORM}" in \
 # Put ccache into the path
 ENV PATH /usr/lib/ccache:$PATH
 RUN export PATH=/usr/lib/ccache/:$PATH
-
-# Add package libxml2-dev (combine layers later)
-RUN dnf install -y \
-        libxml2-devel \
-        && dnf clean all
