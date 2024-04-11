@@ -4,7 +4,9 @@ x-configuration: &CONFIGURATION
   working_dir: /Build
   command: bash -c "${COMPOSE_COMMAND-
     cmake -G Ninja /Source;
+    ninja;
     ninja install;
+    ninja run;
     ctest -j 6 --timeout 10;}
     ${COMPOSE_APPEND- }"
 
@@ -27,16 +29,52 @@ services:
       - PLATFORM=ubuntu_24.04
     <<: *CONFIGURATION
 
-  ubuntu_23.04:
-    image: srccomplexity/ubuntu:23.04
+  ubuntu_23.10:
+    image: srccomplexity/ubuntu:23.10
     platform: ${PLATFORM}
     build:
       context: docker/ubuntu/
       <<: *PLATFORMS
       args:
-        TAG: "23.04"
+        TAG: "23.10"
     environment:
-      - PLATFORM=ubuntu_23.04
+      - PLATFORM=ubuntu_23.10
+    <<: *CONFIGURATION
+
+  ubuntu_22.04:
+    image: srccomplexity/ubuntu:22.04
+    platform: ${PLATFORM}
+    build:
+      context: docker/ubuntu/
+      <<: *PLATFORMS
+      args:
+        TAG: "22.04"
+    environment:
+      - PLATFORM=ubuntu_22.04
+    <<: *CONFIGURATION
+
+  ubuntu_20.04:
+    image: srccomplexity/ubuntu:20.04
+    platform: ${PLATFORM}
+    build:
+      context: docker/ubuntu/
+      <<: *PLATFORMS
+      args:
+        TAG: "20.04"
+    environment:
+      - PLATFORM=ubuntu_20.04
+    <<: *CONFIGURATION
+
+  fedora_41:
+    image: srccomplexity/fedora:41
+    platform: ${PLATFORM}
+    build:
+      context: docker/fedora/
+      <<: *PLATFORMS
+      args:
+        TAG: "41"
+    environment:
+      - PLATFORM=fedora_41
     <<: *CONFIGURATION
 
   fedora_40:
@@ -49,4 +87,28 @@ services:
         TAG: "40"
     environment:
       - PLATFORM=fedora_40
+    <<: *CONFIGURATION
+
+  fedora_39:
+    image: srccomplexity/fedora:39
+    platform: ${PLATFORM}
+    build:
+      context: docker/fedora/
+      <<: *PLATFORMS
+      args:
+        TAG: "39"
+    environment:
+      - PLATFORM=fedora_39
+    <<: *CONFIGURATION
+
+  fedora_38:
+    image: srccomplexity/fedora:38
+    platform: ${PLATFORM}
+    build:
+      context: docker/fedora/
+      <<: *PLATFORMS
+      args:
+        TAG: "38"
+    environment:
+      - PLATFORM=fedora_38
     <<: *CONFIGURATION
