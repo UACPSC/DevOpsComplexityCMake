@@ -53,10 +53,31 @@ add_custom_target(run
 
 # install
 install(TARGETS srccomplexity COMPONENT CLIENT)
-install(TARGETS srcMLXPathCount COMPONENT "LIBRARY")
+install(TARGETS srcMLXPathCount COMPONENT DEVLIB)
 install(TARGETS srcMLXPathCount_static COMPONENT DEVELOPER)
 include(GNUInstallDirs)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/srcMLXPathCount.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT DEVELOPER)
+
+# packaging
+include(CPackComponent)
+cpack_add_component(CLIENT
+                    DISPLAY_NAME "srccomplexity"
+                    DESCRIPTION "Calculates the complexity of a C++ program using the srcML format"
+                    REQUIRED
+                    INSTALL_TYPES CLIENT DEVELOPER)
+
+cpack_add_component(DEVLIB
+                    DISPLAY_NAME "libsrcMLXPathCount"
+                    DESCRIPTION "Calculates the complexity of a C++ program using the srcML format"
+                    REQUIRED
+                    INSTALL_TYPES CLIENT DEVELOPER)
+
+cpack_add_component(DEVELOPER
+                    DISPLAY_NAME "libsrcMLXPathCount Developer"
+                    DESCRIPTION "Include file, development libraries, i.e.., static library"
+                    INSTALL_TYPES DEVELOPER)
+
+set(CPACK_DEB_COMPONENT_INSTALL ON)
 
 # testing
 include(CTest)
