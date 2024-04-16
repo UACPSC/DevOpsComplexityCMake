@@ -5,10 +5,10 @@ on: workflow_dispatch
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
-    runs-on: ${{matrix.os}}
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     container: srcml/ubuntu:24.04
     steps:
