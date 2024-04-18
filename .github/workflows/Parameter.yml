@@ -1,0 +1,20 @@
+---
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Linux version tag"
+        required: true
+        default: "24.04"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+
+      - name: Output tag
+        shell: bash
+        run: echo ${{ github.event.inputs.tag }}
