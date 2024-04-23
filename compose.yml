@@ -23,10 +23,12 @@ x-platforms: &PLATFORMS
 services:
 
   ubuntu_24.04:
-    image: srccomplexity/ubuntu:24.04
+    image: mlcollard/ubuntu:24.04
     platform: ${PLATFORM}
     build:
       context: docker/ubuntu/
+      tags:
+        - "mlcollard/ubuntu:latest"
       <<: *PLATFORMS
       args:
         TAG: "24.04"
