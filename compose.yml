@@ -66,6 +66,7 @@ services:
       <<: *PLATFORMS
       args:
         TAG: "20.04"
+        CMAKE_BINARY: "ON"
     environment:
       - PLATFORM=ubuntu_20.04
     <<: *CONFIGURATION
