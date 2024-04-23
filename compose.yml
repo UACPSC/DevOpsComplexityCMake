@@ -6,6 +6,7 @@ x-configuration: &CONFIGURATION
     cmake -G Ninja /Source;
     ninja;
     ninja install;
+    ldconfig;
     ninja run;
     ctest -j 6 --timeout 10;}
     ${COMPOSE_APPEND- }"

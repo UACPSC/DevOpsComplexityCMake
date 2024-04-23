@@ -40,3 +40,15 @@ RUN apt-get update && \
 # Put ccache into the path
 ENV PATH /usr/lib/ccache:$PATH
 RUN export PATH=/usr/lib/ccache/:$PATH
+
+# Install srcml for testing purposes
+ARG TARGETPLATFORM
+RUN case "${TARGETPLATFORM}" in \
+         "linux/amd64")  ARCHITECTURE="x86_64"   ;; \
+         "linux/arm64")  ARCHITECTURE="aarch64"  ;; \
+         *)  exit 1 ;; \
+    esac; \
+    curl --insecure -L -O "https://mlcollard.net/dist/srcml_1.0.0-1_ubuntu20.04_${ARCHITECTURE}.deb" && \
+    apt-get update && \
+    apt-get install -y ./srcml_1.0.0*.deb; \
+    rm -f srcml_1.0.0*.deb

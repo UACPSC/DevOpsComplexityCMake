@@ -29,3 +29,13 @@ RUN case "${TARGETPLATFORM}" in \
 # Put ccache into the path
 ENV PATH /usr/lib/ccache:$PATH
 RUN export PATH=/usr/lib/ccache/:$PATH
+
+# Install srcml for testing
+RUN case "${TARGETPLATFORM}" in \
+         "linux/amd64")  ARCHITECTURE="x86_64"   ;; \
+         "linux/arm64")  ARCHITECTURE="aarch64"  ;; \
+         *)  exit 1 ;; \
+    esac; \
+    curl --insecure -L -O "https://mlcollard.net/dist/srcml-1.0.0-1.fc38.${ARCHITECTURE}.rpm" && \
+    dnf install -y /srcml-1.0.0*.rpm; \
+    rm -f /srcml_1.0.0*.rpm
