@@ -1,6 +1,10 @@
+volumes:
+  dist:
+
 x-configuration: &CONFIGURATION
   volumes:
     - .:/Source:ro
+    - dist:/dist
   working_dir: /Build
   command: bash -c "${COMPOSE_COMMAND-
     cmake -G Ninja /Source;
