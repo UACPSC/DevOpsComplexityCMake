@@ -1,0 +1,12 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: mlcollard/ubuntu:latest
+    steps:
+      - checkout
+      - run: mkdir build
+      - run: cd build && cmake .. -G Ninja
+      - run: cd build && ninja && ninja install
+      - run: ldconfig
+      - run: cd build && ctest
