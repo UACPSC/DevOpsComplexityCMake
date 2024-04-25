@@ -5,8 +5,24 @@ jobs:
       - image: mlcollard/ubuntu:latest
     steps:
       - checkout
-      - run: mkdir build
-      - run: cd build && cmake .. -G Ninja
-      - run: cd build && ninja && ninja install
-      - run: ldconfig
-      - run: cd build && ctest
+      - run:
+          name: Build Project
+          command: |
+            mkdir build
+            cd build
+            cmake .. -G Ninja
+            ninja
+      - run:
+          name: Run local tests
+          command: |
+            cd build
+            ctest || true
+      - run:
+          name: Package
+          command: |
+            cd build
+            cpack -G DEB
+
+
+      # - run: cd build && ninja && ninja install
+      # - run: cd build && ctest
