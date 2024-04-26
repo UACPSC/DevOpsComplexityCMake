@@ -5,8 +5,65 @@ jobs:
       - image: mlcollard/ubuntu:latest
     steps:
       - checkout
-      - run: mkdir build
-      - run: cd build && cmake .. -G Ninja
-      - run: cd build && ninja && ninja install
-      - run: ldconfig
-      - run: cd build && ctest
+      - run:
+          name: Build Project
+          command: |
+            mkdir build && cd build
+            cmake .. -G Ninja
+            ninja
+            ldconfig
+      - run:
+          name: Run Local Tests
+          command: |
+            cd build
+            ctest
+      - run:
+          name: Package
+          command: |
+            mkdir workspace
+            cd build
+            cpack -G DEB
+            cp *.deb ../workspace/
+            cp ../srcMLXPathCount.cpp.xml ../workspace/
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - "*.deb"
+            - "srcMLXPathCount.cpp.xml"
+  test:
+    docker:
+      - image: mlcollard/ubuntu:latest
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: ls -lh /tmp/workspace
+      - run:
+          name: Install Packages
+          command: |
+            apt-get install /tmp/workspace/libsrcmlxpathcount_1*.deb
+            apt-get install /tmp/workspace/srccomplexity*.deb
+      - run:
+          name: Run Program
+          command: |
+            srccomplexity < /tmp/workspace/srcMLXPathCount.cpp.xml
+            srcml --text="void f(){}" -l C++ | srccomplexity
+      - checkout
+      - run:
+          name: Run Test
+          command: |
+            mkdir build
+            cd build
+            cmake ..
+            ctest || true
+            find /tmp/workspace -name "*.deb"
+      - store_artifacts:
+          path: /tmp/workspace/
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

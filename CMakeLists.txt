@@ -77,14 +77,16 @@ cpack_add_component(DEVELOPER
                     DESCRIPTION "Include file, development libraries, i.e.., static library"
                     INSTALL_TYPES DEVELOPER)
 
-set(CPACK_DEB_COMPONENT_INSTALL ON)
+# General package name
+set(CPACK_PACKAGE_NAME srccomplexity)
 
-set(CPACK_DEBIAN_CLIENT_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
-set(CPACK_DEBIAN_DEVLIB_PACKAGE_NAME "libsrcMLXPathCount")
-set(CPACK_DEBIAN_DEVELOPER_PACKAGE_NAME "libsrcMLXPathCount-dev")
-set(CPACK_DEBIAN_CLIENT_PACKAGE_DEPENDS "${CPACK_DEBIAN_DEVLIB_PACKAGE_NAME} (>= ${PROJECT_VERSION})")
-set(CPACK_DEBIAN_DEVLIB_PACKAGE_DEPENDS "")
-set(CPACK_DEBIAN_DEVELOPER_PACKAGE_DEPENDS "${CPACK_DEBIAN_DEVLIB_PACKAGE_NAME} (>= ${PROJECT_VERSION})")
+# Determine Linux distribution
+if(UNIX AND NOT APPLE)
+    cmake_host_system_information(RESULT DISTRO QUERY DISTRIB_NAME)
+endif()
+
+# Debian packaging
+include(debian.cmake)
 
 # testing
 include(CTest)
